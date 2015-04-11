@@ -15,17 +15,21 @@ namespace SpaceTraffic.GithubToTfsSync
     /// </summary>
     public class GitSync
     {
+        /// <summary>
+        /// Path to the local mirror cache repository.
+        /// </summary>
         private String cacheRepositoryPath;
 
-        public String CacheRepositoryPath
-        {
-            get { return cacheRepositoryPath; }
-            set { cacheRepositoryPath = value; }
-        }
-
-
+        /// <summary>
+        /// Configuration of remotes - source and target repositories.
+        /// </summary>
         private MirrorConfiguration mirrorConfiguration;
 
+        /// <summary>
+        /// Initializes the synchronization object.
+        /// </summary>
+        /// <param name="cacheRepositoryPath"></param>
+        /// <param name="mirrorConfiguration"></param>
         public GitSync(String cacheRepositoryPath, MirrorConfiguration mirrorConfiguration)
         {
             this.cacheRepositoryPath = cacheRepositoryPath;
@@ -53,7 +57,9 @@ namespace SpaceTraffic.GithubToTfsSync
             Trace.CorrelationManager.StopLogicalOperation();
         }
 
-
+        /// <summary>
+        /// Clones the source remote repository.
+        /// </summary>
         private void CloneRemote()
         {
             var directoryName = Path.GetFileName(cacheRepositoryPath);
@@ -61,6 +67,9 @@ namespace SpaceTraffic.GithubToTfsSync
             RunGitCommand(String.Format("clone --mirror {0} {1}", mirrorConfiguration.SourceRepository.Url, directoryName), parentPath);
         }
 
+        /// <summary>
+        /// Registers all remotes in the mirror repository.
+        /// </summary>
         private void SetupMirror()
         {
             foreach (TargetRepository targetRepository in mirrorConfiguration.TargetRepositories)

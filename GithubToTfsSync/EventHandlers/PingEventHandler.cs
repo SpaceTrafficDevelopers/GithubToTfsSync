@@ -2,6 +2,9 @@
 
 namespace SpaceTraffic.GithubToTfsSync.EventHandlers
 {
+    /// <summary>
+    /// Ping event handler.
+    /// </summary>
     public class PingEventHandler : IWebhookEventHandler
     {
         /// <summary>

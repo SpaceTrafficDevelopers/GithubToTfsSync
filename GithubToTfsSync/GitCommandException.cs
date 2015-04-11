@@ -6,6 +6,9 @@ using System.Web;
 
 namespace SpaceTraffic.GithubToTfsSync
 {
+    /// <summary>
+    /// Exception signalling an error while running the git command.
+    /// </summary>
     [Serializable]
     public class GitCommandException : Exception
     {

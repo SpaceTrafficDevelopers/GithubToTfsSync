@@ -56,6 +56,9 @@ namespace SpaceTraffic.GithubToTfsSync
             return new GitSync(cachePath, configuration);
         }
 
+        /// <summary>
+        /// Registers webhook event handlers.
+        /// </summary>
         private void InitializeEventHandlers()
         {
             eventHandlers = new Dictionary<string, IWebhookEventHandler>()
@@ -65,7 +68,10 @@ namespace SpaceTraffic.GithubToTfsSync
             };
         }
 
-
+        /// <summary>
+        /// Process the request.
+        /// </summary>
+        /// <param name="context">HTTP Context.</param>
         public void ProcessRequest(HttpContext context)
         {
             var request = context.Request;
@@ -105,7 +111,12 @@ namespace SpaceTraffic.GithubToTfsSync
                 Trace.TraceInformation("Finished processing the request.");
             }
         }
-
+        
+        /// <summary>
+        /// Reads raw input (POST) data from the request. Only POST requests are accepted.
+        /// </summary>
+        /// <param name="request">POST request.</param>
+        /// <returns>Raw input data.</returns>
         private byte[] ReadPostData(HttpRequest request)
         {
             if (request.HttpMethod == "POST")
@@ -179,7 +190,13 @@ namespace SpaceTraffic.GithubToTfsSync
             return hmac;
         }
 
-        public void ProcessEvent(HttpResponse response, String eventName, dynamic payload)
+        /// <summary>
+        /// Processes an event delivered via webhook.
+        /// </summary>
+        /// <param name="response">Response.</param>
+        /// <param name="eventName">Name of the event.</param>
+        /// <param name="payload">Decoded JSON payload.</param>
+        private void ProcessEvent(HttpResponse response, String eventName, dynamic payload)
         {
             if (eventName == null)
             {
@@ -197,8 +214,13 @@ namespace SpaceTraffic.GithubToTfsSync
             }
         }
 
-
-        public void SendError(HttpResponse response, int statusCode, string message)
+        /// <summary>
+        /// Writes an JSON error message to the response and sets an appropriate status code.
+        /// </summary>
+        /// <param name="response">Response.</param>
+        /// <param name="statusCode">HTTP status code to send.</param>
+        /// <param name="message">Error Message.</param>
+        protected void SendError(HttpResponse response, int statusCode, string message)
         {
             object responseObject = new
             {

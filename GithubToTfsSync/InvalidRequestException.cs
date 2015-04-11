@@ -5,6 +5,9 @@ using System.Web;
 
 namespace SpaceTraffic.GithubToTfsSync
 {
+    /// <summary>
+    /// Exception signalling an invalid request from client.
+    /// </summary>
     [Serializable]
     public class InvalidRequestException : Exception
     {
